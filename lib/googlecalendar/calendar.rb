@@ -60,6 +60,10 @@ module GoogleCalendar
       REXML::Document.new(ret.body).root.elements.each("entry"){}.map do |elem|
         elem.attributes["xmlns:gCal"] = "http://schemas.google.com/gCal/2005"
         elem.attributes["xmlns:gd"] = "http://schemas.google.com/g/2005"
+        elem.attributes["xmlns:openSearch"] = "http://a9.com/-/spec/opensearchrss/1.0/"
+        elem.attributes["xmlns:gml"] = "http://www.opengis.net/gml"
+        elem.attributes["xmlns:georss"] = "http://www.georss.org/georss"
+        elem.attributes["xmlns:batch"] = "http://schemas.google.com/gdata/batch"
         elem.attributes["xmlns"] = "http://www.w3.org/2005/Atom"
         entry = Event.new
         entry.srv = @srv
