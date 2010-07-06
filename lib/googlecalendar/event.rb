@@ -103,10 +103,12 @@ module GoogleCalendar
 XML
 
     attr_accessor :allday, :feed, :srv, :status, :where, :title, :desc, :st, :en, :xml
+    attr_accessor :reminders
 
     def initialize()
       @xml = nil
       self.status = :new
+      @reminders = []
     end
     
     # load xml into this instance
@@ -199,6 +201,17 @@ XML
       @xml.root.elements.each("link") do |link|
         @feed = link.attributes["href"] if link.attributes["rel"] == "edit"
       end
+
+      # parse reminder data
+      @reminders = []
+      gd_when = @xml.root.elements['gd:when']
+      if gd_when
+         gd_when.elements.each('gd:reminder') {|reminder|
+	     @reminders << {:method => reminder.attributes['method'],
+                 :minutes => reminder.attributes['minutes']}
+         }
+      end
+
     end
 
     # set attributes of an instance into xml
@@ -214,6 +227,15 @@ XML
           elem.text = val
         end
       end
+
+      # add reminder
+      @reminders.each {|reminder|
+          gd_when = @xml.root.elements['gd:when']
+          elem = gd_when.elements.add('gd:reminder')
+          elem.attributes['minutes'] = reminder[:minutes].to_s
+          elem.attributes['method'] = reminder[:method].to_s
+      }
+
     end
 
     # == Allday Event Bugs
