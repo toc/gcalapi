@@ -13,7 +13,7 @@ class TestService3 < Test::Unit::TestCase
   # get one-time token
   def test_get_onetime_token(use_session = false)
     # login google account
-    agent = WWW::Mechanize.new do |a| a.log = logger end
+    agent = Mechanize.new do |a| a.log = logger end
     page = agent.get("https://www.google.com/accounts/Login")
 
     form = page.forms[0]

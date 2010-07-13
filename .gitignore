@@ -1,0 +1,6 @@
+/pkg
+/html
+/authsub.log
+/testlog.log
+test/parameters.rb
+*~
