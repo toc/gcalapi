@@ -1,3 +1,5 @@
+* Original contents of README
+
 = GoogleCalendar -- Google Calendar API
 
 == Installation
@@ -11,3 +13,51 @@ This library is public domain software and provided without warranty of any kind
 == Author
 
 zoriorz@gmail.com
+
+* Memorandums for toc branch
+
+** test/03_authsub_test.rb がいろいろ失敗する.
+
+   とりあえず、このテストを外せば gem は作ることができるので
+   大きな変更を行ったときはそれで gem 作って逃げます。
+
+   テストの目的が理解できていないので、問題改善には至りません。
+   というか、こちら方面を真面目に勉強する時間がとれないので。
+
+** 環境の構築
+
+*** 開発環境の構築( Windows + Cygwin )
+
+    これで rake までは普通に通るようになるはず
+
+    + cygwin(1.7.x)を普通にインストールする
+      - ruby は追加必須(あたりまえ)。2010-7-13時点でVer1.8.7。
+      - libxml2-devel (mechanaizeの導入に必要)
+      - libxslt-devel (mechanaizeの導入に必要)
+    + ここ(http://rubyforge.org/projects/rubygems/)からgemをとってくる
+      *.tgzファイルを解凍して ./setup.rb でインストール
+    + gem install rake で rake をインストール
+    + gem install mechanize で mechanize をインストール
+
+*** テスト環境の構築
+
+    rake package するためにテスト環境を作ってみます
+
+    + google カレンダーにアカウントがなければ登録する
+      - 新規カレンダーとして "Calendar Test" というカレンダーを作成
+      - カレンダーの説明は "Calendar Test Description" としておく。
+      - 場所は "Calendar Test Location"
+      - TZは「イギリス->ロンドン」(Europe/London)にしておく。
+    + cp test/{template.,}parameters.rb して後者を編集
+      - googleのアカウント情報を登録
+      - ここで作成したカレンダーの更新用URL(.../private/full)を登録
+    + WWW::Mechanize を Mechanize に変更(test/03_authsub_test.rb)
+      (tocブランチでは反映済み)
+
+
+* Local Variables
+
+;;; Local Variables: ;;;
+;;; mode: org ;;;
+;;; coding: utf-8 ;;;
+;;; End: ;;;
